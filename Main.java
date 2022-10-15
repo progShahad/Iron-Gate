@@ -150,7 +150,6 @@ public class Main {
             in.nextLine();
             nickName = in.nextLine();
             System.out.print("Major: ");
-            in.nextLine();
             major = in.nextLine();
             System.out.print("Email: ");
             email = in.next();
