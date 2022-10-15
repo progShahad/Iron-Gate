@@ -2,7 +2,7 @@ package main;
 
 public class Project extends Course {
     //Data fields
-    public String title, classification, describtion, team;
+    public String title, classification, describtion, team, suggestions;
     public int likes;
     
     //Constructor
