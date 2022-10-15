@@ -10,6 +10,7 @@ public class Team {
     Team(String teamName, int numberOfMembers){
         this.teamName = teamName;
         this.numberOfMembers = numberOfMembers;
+        membersNames = new String[numberOfMembers];
     }
     //Other methods
     
