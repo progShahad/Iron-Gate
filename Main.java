@@ -87,7 +87,7 @@ public class Main {
                 System.out.print("Enter the email: ");
                 email = in.next();
                 for(int i=0 ; i < User.numUser ; i++){
-                    if(users[i].email.equals(email)){
+                    if(users[i].getEmail().equals(email)){
                         System.out.print("Enter new password: ");
                         newPass = in.next();
                         users[i].setPassword(newPass);
@@ -125,7 +125,7 @@ public class Main {
         
         System.out.println(users[index].nickName + "'s Information");
         System.out.println("Username: " + users[index].username);
-        System.out.println("Email: " + users[index].email);
+        System.out.println("Email: " + users[index].getEmail());
         System.out.println("Major: " + users[index].major);
         System.out.print("Change Information? 1. Yes  2. No");
         change = in.nextByte();
