@@ -20,10 +20,12 @@ public class Main {
         switch(sign){
             case 1:
                 index = login();
+                
                 break;
             case 2:
                 System.out.println("Fill in all the fields");
                 signUp();
+                
                 break;
             default:
                 System.out.println("Invalid choice");
@@ -53,24 +55,29 @@ public class Main {
         System.out.print("Username: ");
         username = in.next();
         System.out.print("Nick name: ");
+        in.nextLine();
         nickName = in.nextLine();
         System.out.print("Major: ");
+        in.nextLine();
         major = in.nextLine();
         System.out.print("Email: ");
         email = in.next();
         System.out.print("Password: ");
+        in.nextLine();
         password = in.nextLine();
         System.out.print("Confirm password: ");
+        in.nextLine();
         confirmPass = in.nextLine();
         
-        while(password != confirmPass){
+        while( password.equals(confirmPass) ){
             System.out.println("Confirm password does not match password");
             System.out.print("Password: ");
+            in.nextLine();
             password = in.nextLine();
             System.out.print("Confirm password: ");
+            in.nextLine();
             confirmPass = in.nextLine();
         }
-        
         users[User.numUser] = new User(username, nickName, email, major, password);
     } //end of signUp method
     
@@ -89,7 +96,8 @@ public class Main {
                 for(int i=0 ; i < User.numUser ; i++){
                     if(users[i].getEmail().equals(email)){
                         System.out.print("Enter new password: ");
-                        newPass = in.next();
+                        in.nextLine();
+                        newPass = in.nextLine();
                         users[i].setPassword(newPass);
                         break;
                     }
@@ -99,7 +107,8 @@ public class Main {
                 System.out.print("Username: ");
                 username = in.next();
                 System.out.print("Password: ");
-                password = in.next();
+                in.nextLine();
+                password = in.nextLine();
                 
                 for(int i=0 ; i < User.numUser ; i++){
                     if(users[i].username.equals(username) && users[i].getPassword().equals(password)){
@@ -135,9 +144,11 @@ public class Main {
             System.out.print("Username: ");
             username = in.next();
             System.out.print("Nick name: ");
-            nickName = in.next();
+            in.nextLine();
+            nickName = in.nextLine();
             System.out.print("Major: ");
-            major = in.next();
+            in.nextLine();
+            major = in.nextLine();
             System.out.print("Email: ");
             email = in.next();
             users[index].editInformation(username, nickName, email, major);
