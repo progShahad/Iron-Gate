@@ -3,8 +3,8 @@ import java.util.*;
 
 public class User {
     //Data fields
-    public String username, nickName, email, major;
-    private String password;
+    public String username, nickName, major;
+    private String password, email;
     public Date create;
     public Project[] projects;
     public static int numUser = 0;
@@ -26,6 +26,14 @@ public class User {
     public String getPassword(){
         return password;
     }
+    
+    public void setEmail(String email){
+        this.email = email;
+    }
+    public String getEmail(){
+        return email;
+    }
+    
     //Other methods
     public void editInformation(String username, String nickName, String email, String major){
         this.username = username;
