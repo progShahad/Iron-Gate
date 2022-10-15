@@ -54,28 +54,31 @@ public class Main {
         
         System.out.print("Username: ");
         username = in.next();
+        
         System.out.print("Nick name: ");
         in.nextLine();
         nickName = in.nextLine();
+        
         System.out.print("Major: ");
-        in.nextLine();
         major = in.nextLine();
+        
         System.out.print("Email: ");
         email = in.next();
+        
         System.out.print("Password: ");
         in.nextLine();
         password = in.nextLine();
+        
         System.out.print("Confirm password: ");
-        in.nextLine();
         confirmPass = in.nextLine();
         
-        while( password.equals(confirmPass) ){
+        System.out.println(username + "\t" + nickName + "\t" + major + "\t" + email + "\t" + password + "\t" + confirmPass);
+        
+        while( !password.equals(confirmPass) ){
             System.out.println("Confirm password does not match password");
             System.out.print("Password: ");
-            in.nextLine();
             password = in.nextLine();
             System.out.print("Confirm password: ");
-            in.nextLine();
             confirmPass = in.nextLine();
         }
         users[User.numUser] = new User(username, nickName, email, major, password);
