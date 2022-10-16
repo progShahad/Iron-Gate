@@ -14,7 +14,7 @@ public class Main {
         
         System.out.println("\tWelcome to Iron Gate\n "
                 + "About us....");
-        System.out.println("1. Sign in\n2. Sign up");
+        System.out.println("\n  1. Sign in\n  2. Sign up");
         sign = in.nextByte();
         
         switch(sign){
@@ -31,7 +31,7 @@ public class Main {
                 System.out.println("Invalid choice");
         }
         
-        System.out.println("1. Add new project\n2. Search for projects\n3. View profile");
+        System.out.println("\n1. Add new project\n2. Search for projects\n3. View profile\n0. Logout");
         choice = in.nextByte();
         
         switch(choice){
@@ -44,10 +44,14 @@ public class Main {
             case 3:
                 viewInfo(index);
                 break;
+            case 0:
+                break;
             default:
                 System.out.println("Invalid choice");
         }
+        
     } //end of main
+    
     
     public static void signUp(){
         String username, nickName, major, email, password, confirmPass;
@@ -84,6 +88,7 @@ public class Main {
         users[User.numUser] = new User(username, nickName, email, major, password);
     } //end of signUp method
     
+    
     public static int login(){
         String username, password, email, newPass;
         boolean login = false;
@@ -97,7 +102,7 @@ public class Main {
                 System.out.print("Enter the email: ");
                 email = in.next();
                 for(int i=0 ; i < User.numUser ; i++){
-                    if(users[i].getEmail().equals(email)){
+                    if(users[i].getEmail().equalsIgnoreCase(email)){
                         System.out.print("Enter new password: ");
                         in.nextLine();
                         newPass = in.nextLine();
@@ -107,21 +112,21 @@ public class Main {
                 }
             }
             else{
-                System.out.print("Username: ");
+                System.out.print("\nUsername: ");
                 username = in.next();
                 System.out.print("Password: ");
                 in.nextLine();
                 password = in.nextLine();
                 
                 for(int i=0 ; i < User.numUser ; i++){
-                    if(users[i].username.equals(username) && users[i].getPassword().equals(password)){
+                    if(users[i].username.equalsIgnoreCase(username) && users[i].getPassword().equals(password)){
                         login = true;
                         index = i;
                         break;
                     }
                 }
                 if(login){
-                    System.out.println("Logged in successfully, welcome again " + users[index].nickName);
+                    System.out.println(" Logged in successfully, welcome again " + users[index].nickName);
                     login = true;
                 }
                 else
@@ -135,11 +140,11 @@ public class Main {
         byte change;
         String username, nickName, major, email;
         
-        System.out.println(users[index].nickName + "'s Information");
-        System.out.println("Username: " + users[index].username);
-        System.out.println("Email: " + users[index].getEmail());
-        System.out.println("Major: " + users[index].major);
-        System.out.print("Change Information? 1. Yes  2. No");
+        System.out.println("\n -- " + users[index].nickName + "\'s Information --");
+        System.out.println("  Username: " + users[index].username);
+        System.out.println("  Email: " + users[index].getEmail());
+        System.out.println("  Major: " + users[index].major);
+        System.out.print("\n Change Information? 1. Yes  2. No");
         change = in.nextByte();
         
         if(change == 1){
