@@ -8,7 +8,7 @@ public class User extends Info{
     public String username, nickName, major;
     private String password, email;
     public Date create;
-    public Project[] projects;
+//    public Project[] projects;
     
     Scanner in = new Scanner(System.in);
 //    public static int numUser = 0;
@@ -54,54 +54,59 @@ public class User extends Info{
         
         switch(edit){
             case 1:
-                System.out.println("New username: ");
+                System.out.print("New username: ");
                 in.nextLine();
                 username = in.nextLine();
                 break;
             case 2:
-                System.out.println("New nickname: ");
+                System.out.print("New nickname: ");
                 in.nextLine();
                 nickName = in.nextLine();
                 break;
             case 3:
-                System.out.println("New major: ");
+                System.out.print("New major: ");
                 in.nextLine();
                 major = in.nextLine();
                 break;
             case 4:
-                System.out.println("New email: ");
+                System.out.print("New email: ");
                 setEmail(in.next());
-                while( !email.contains("@") ){
-                    System.out.print("Email must contain '@', enter again: ");
-                    email = in.next();
-                }
+                email = Main.validEmail(email);
+//                while( !email.contains("@") ){
+//                    System.out.print("Email must contain '@', enter again: ");
+//                    email = in.next();
+//                }
                 break;
             case 5:
-                System.out.println("New password: ");
+                System.out.print("New password: ");
                 in.nextLine();
                 setPassword(in.nextLine());
-                Main.checkPass(password);
+                while( !Main.checkPass(password) ){
+                    System.out.print("Invalid password, enter again: ");
+                    setPassword(in.nextLine());
+                }
                 break;
             case 6:
-                System.out.println("New username: ");
+                System.out.print("New username: ");
                 in.nextLine();
                 username = in.nextLine();
-                System.out.println("New nickname: ");
+                System.out.print("New nickname: ");
                 nickName = in.nextLine();
-                System.out.println("New major: ");
+                System.out.print("New major: ");
                 major = in.nextLine();
-                System.out.println("New email: ");
+                System.out.print("New email: ");
                 setEmail(in.next());
-                while( !email.contains("@") ){
-                    System.out.print("Email must contain '@', enter again: ");
-                    email = in.next();
-                }
-                System.out.println("New password: ");
+                email = Main.validEmail(email);
+//                while( !email.contains("@") ){
+//                    System.out.print("Email must contain '@', enter again: ");
+//                    email = in.next();
+//                }
+                System.out.print("New password: ");
                 in.nextLine();
                 setPassword(in.nextLine());
                 
-                while(!Main.checkPass(password)){
-                    System.out.println("Invalid password, enter again: ");
+                while( !Main.checkPass(password) ){
+                    System.out.print("Invalid password, enter again: ");
                     setPassword(in.nextLine());
                 }
                 
@@ -113,11 +118,11 @@ public class User extends Info{
         byte change;
         String username, nickName, major, email;
         do{
-            System.out.println("\n -- " + this.nickName + "\'s Information --");
+            System.out.println("\n ------- " + this.nickName + "\'s Information -------");
             System.out.println("  Username: " + this.username);
             System.out.println("  Email: " + this.email);
             System.out.println("  Major: " + this.major);
-            System.out.println("\n Change Information? 1. Yes  2. No");
+            System.out.println("\nChange Information? 1. Yes  2. No");
             change = in.nextByte();
 
             if(change == 1){
@@ -126,6 +131,8 @@ public class User extends Info{
             }
         }
         while(change == 1);
+        
+        System.out.println("------------------------------------------");
     } //end of viewInfo method
     
 //    abstract void addTeam(String teamName, int number, ArrayList<String> members);
