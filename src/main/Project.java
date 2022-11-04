@@ -1,5 +1,4 @@
 package main;
-
 import java.util.Scanner;
 
 public class Project extends Info {
@@ -44,11 +43,11 @@ public class Project extends Info {
     
     @Override
     public void viewInfo(){
-        System.out.println("\n--- Project Information ---"
+        System.out.println("\n----------- Project Information -----------"
                 + "\nTitle: " + title
                 + "\nDescription: " + description
                 + "\nProgramming language: " + prog_language
-                + "\nLevel: " + level
+                + "\nProject level: " + level
                 + "\nCourse name: " + course.name
                 + "\nCourse level: " + course.level
                 + "\nLikes: " + likes
