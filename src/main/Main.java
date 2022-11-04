@@ -26,9 +26,18 @@ public class Main {
         return false;
     } //end of checkPass method
     
-    public static void sign(){
+    public static String validEmail(String email){
+        while( !email.contains("@") ){
+            System.out.print("Email must contain '@', enter again: ");
+            email = in.next();
+        }
+        return email;
+    } //end of validEmail method
+    
+    public static void sign(){ //sign up
         String username, nickName, major, email, password, confirmPass;
         
+        System.out.println("--------- Fill in all the fields ---------");
         System.out.print("Username: ");
         username = in.next();
         
@@ -40,19 +49,15 @@ public class Main {
         major = in.nextLine();
         
         System.out.print("Email: ");
-        email = in.next();
-        
-        while( !email.contains("@") ){
-            System.out.print("Email must contain '@', enter again: ");
-            email = in.next();
-        }
+//        email = in.next();
+        email = validEmail(in.next());
         
         System.out.print("Password: ");
         in.nextLine();
         password = in.nextLine();
         
         while( !checkPass(password) ){
-            System.out.println("Invalid password\nPlease enter password again..");
+            System.out.print("Invalid password\nPlease enter again: ");
             password = in.nextLine();
         }
           
@@ -60,47 +65,69 @@ public class Main {
         confirmPass = in.nextLine();
         
         while( !password.equals(confirmPass) ){
-            System.out.println("Confirm password does not match password");
-            System.out.print("Password: ");
-            password = in.nextLine();
+            System.out.println("Confirm password does not match password\n");
             System.out.print("Confirm password: ");
             confirmPass = in.nextLine();
         }
         
-        System.out.println(username + "\n" + nickName + "\n" + major + "\n" + email);
+        System.out.println("\n------------ Your Information ------------\n"
+                + "Username: " + username
+                + "\nNick name: " + nickName
+                + "\nMajor: " + major
+                + "\nEmail: " + email
+                );
         
         users.add( new User(username, nickName, email, major, password) );
-        System.out.println("Signed up successfully..\nWe are glad you joined us");
+        System.out.println("\nSigned up successfully..\nWe are glad you joined us, " + nickName
+                            + "\n------------------------------------------");
     } //end of sign method
     
     public static int sign(String username, String password){ //sign in
-        String user, pass, email, newPass;
+        String user, pass, email, newPass, newUser, confirmPass;
         int index = -1;
         byte forget;
+        boolean found = false;
         
         for(int i=0 ; i < users.size() ; i++)
             if(users.get(i).username.equalsIgnoreCase(username) && users.get(i).getPassword().equals(password)){
                 index = i;
                 break;
             }
-        if(index >= 0){
-            System.out.println(" Logged in successfully, welcome again " + users.get(index).nickName);
-        }
-        else{
+        
+        if(index < 0){
             System.out.println("Incorrect username/password");
-            System.out.print("Enter 1 if you forgot password: ");
+            System.out.print("\nEnter 1 if you forgot password: ");
             forget = in.nextByte();
             if(forget == 1){
-                System.out.print("Enter the email: ");
-                email = in.next();
-                for(int i=0 ; i < users.size() ; i++)
-                    if(users.get(i).getEmail().equalsIgnoreCase(email)){
-                        System.out.print("Enter new password: ");
-                        in.nextLine();
-                        newPass = in.nextLine();
-                        users.get(i).setPassword(newPass);
-                        break;
+                while(!found){
+                    System.out.print("\nEnter the email: ");
+                    email = in.next();
+                    for(int i=0 ; i < users.size() ; i++){
+                        if(users.get(i).getEmail().equalsIgnoreCase(email)){
+                            found = true;
+                            System.out.print("Enter new password: ");
+                            in.nextLine();
+                            newPass = in.nextLine();
+                            while( !checkPass(newPass) ){
+                                System.out.print("\nInvalid password\nPlease enter again: ");
+                                newPass = in.nextLine();
+                            }
+                            
+                            System.out.print("Confirm password: ");
+                            confirmPass = in.nextLine();
+                            while( !newPass.equals(confirmPass) ){
+                                System.out.println("Confirm password does not match password\n");
+                                System.out.print("Confirm password: ");
+                                confirmPass = in.nextLine();
+                            }
+                            users.get(i).setPassword(newPass);
+                            index = i;
+                            break;
+                        }
                     }
+                    if(!found)
+                        System.out.print("Email is not found\n");
+                }
             }
             else{
                 System.out.print("Username: ");
@@ -148,20 +175,20 @@ public class Main {
         byte confirm, addTeam, level;
         int courseIndex;
         
-        System.out.println("Fill the required fields");
-        System.out.print("Title: ");
+        System.out.println("\nFill the required fields");
+        System.out.print("\nTitle: ");
         in.nextLine();
         title = in.nextLine();
         
-        System.out.print("Describe you project: ");
+        System.out.println("\nDescribe you project:");
         description = in.nextLine();
         
-        System.out.print("Programming language: ");
+        System.out.print("\nProgramming language: ");
         prog_language = in.next();
         if( !searchLanguage(prog_language) )
             return;
         
-        System.out.print("Level:\n"
+        System.out.print("\nLevel:\n"
                 + "1. Simple\n"
                 + "2. Intermediate\n"
                 + "3. Advanced\n");
@@ -173,7 +200,7 @@ public class Main {
         }
         
         do{
-            System.out.print("Course name: ");
+            System.out.print("\nCourse name: ");
             in.nextLine();
             courseName = in.nextLine();
             courseIndex = searchCourse(courseName);
@@ -191,11 +218,11 @@ public class Main {
                 + "3. Image\n");
         uploadMethod = in.next();
         
-        System.out.print("Enter 1 to add team members: ");
+        System.out.print("\nEnter 1 to add team members: ");
         addTeam = in.nextByte();
         
         if(addTeam == 1){
-            System.out.println("Enter the members names, type '-' if you have done\n");
+            System.out.println("Enter the members names, type '-' if you have done");
             in.nextLine();
             name = in.nextLine();
             while(!name.equals("-")){
@@ -210,8 +237,10 @@ public class Main {
         else
             team = null;
         
-        System.out.print("\nEnter 1 to confirm the project: ");
+        System.out.print("\nEnter any number to confirm the project: ");
         confirm = in.nextByte();
+        
+        prog_language = prog_language.toUpperCase();
         
         if(team == null)
             projects.add( new Project(title, description, uploadMethod, prog_language, level, courses[courseIndex]) );
@@ -220,7 +249,7 @@ public class Main {
         
         projects.get(projects.size()-1).viewInfo();
         
-        System.out.println("\n--- Added Successfully ---");
+        System.out.println("\n----------- Added Successfully -----------");
     } //end of addProject method
     
     public static boolean searchLanguage(String language){
@@ -237,11 +266,11 @@ public class Main {
     } //end of searchLanguage method
     
     public static void expand(){
-        System.out.println("\nEnter the number of project to be expanded, 0 to exit: ");
+        System.out.println("\nEnter the number of project to be expanded, 0 to exit:");
         int projectNum = in.nextInt();
         while(projectNum != 0){
             projects.get(projectNum-1).viewInfo();
-            System.out.print("\nEnter 1 to like this project, 0 to dislike, other number to skip: ");
+            System.out.println("\nEnter 1 to like this project, 0 to dislike, other number to skip: ");
             byte feedback = in.nextByte();
             if(feedback == 1)
                 projects.get(projectNum-1).likes++;
@@ -251,10 +280,11 @@ public class Main {
             System.out.print("Enter 1 to write a comment: ");
             feedback = in.nextByte();
             if(feedback == 1){
-                System.out.println("Write your comment:");
+                System.out.println("----------- Write your comment -----------");
                 in.nextLine();
                 projects.get(projectNum-1).comments += in.nextLine() + "\n------------------------------------------\n";;
-                System.out.println("Thank you for your feedback");
+                System.out.println("Thank you for your feedback"
+                        + "\n------------------------------------------");
             }
             
             System.out.print("Enter the number of project to be expanded, 0 to exit: ");
@@ -264,7 +294,7 @@ public class Main {
     
     public static void search(byte level){ //by level
         int results = 0;
-        System.out.println("\n--- Results ---");
+        System.out.println("\n----- Results -----");
         for(int i=0 ; i < projects.size() ; i++){
             if(projects.get(i).level == level){
                 results++;
@@ -285,7 +315,7 @@ public class Main {
     
     public static void search(String language){ //by language
         int results = 0;
-        System.out.println("\n--- Results ---");
+        System.out.println("\n----- Results -----");
         for(int i=0 ; i < projects.size() ; i++){
                 if(projects.get(i).prog_language.equalsIgnoreCase(language)){
                     results++;
@@ -306,7 +336,7 @@ public class Main {
     
     public static void search(Course course){ //by course
         int results = 0;
-        System.out.println("\n--- Results ---");
+        System.out.println("\n----- Results -----");
         for(int i=0 ; i < projects.size() ; i++){
             if(projects.get(i).course.equals(course)){
                 results++;
@@ -332,13 +362,14 @@ public class Main {
         Team team;
         ArrayList<String> names = new ArrayList<>(Arrays.asList("Shahad","Muneera", "Nada", "Norah", "Reem"));
         team = new Team("Geniuses", 5, names);
-        projects.add(new Project("Iron Gate", "Code hosting platform that serves students at the university in all faculties of all specialties and levels.", "File", "Java", (byte)2, team, courses[2]));
+        
+        projects.add(new Project("Iron Gate", "Code hosting platform that serves students at the university in all faculties of all specialties and levels.", "File", languages[0], (byte)2, team, courses[2]));
         
         byte platform, choice;
         int index = -1;
-        String suggestions, username, password;
+        String suggestions = "", username, password;
         
-        System.out.println("------ Welcome to Iron Gate ------");
+        System.out.println("---------- Welcome to Iron Gate ----------");
         
         while(index < 0){
             System.out.println("\n1- About us\n"
@@ -350,19 +381,27 @@ public class Main {
             platform = in.nextByte();
             switch(platform){
                 case 1:
-                   System.out.println("Code hosting platform that serves students at the university in all faculties of all specialties and levels.\nThe platform provides the service of raising projects related to courses or graduation projects.");
+                   System.out.println("\n---------------- About Us ----------------\n\n"
+                           + "Code hosting platform that serves students at the university\n"
+                           + "in all faculties of all specialties and levels.\n"
+                           + "The platform provides the service of raising projects\n"
+                           + "related to courses or graduation projects.\n"
+                           + "\n------------------------------------------");
                    break;
 
                 case 2:
-                    System.out.println("\n Email: contact@Iron_gate.com\n"
-                            + " Phone: 9200385");
+                    System.out.println("\n--------------- Contact Us ---------------\n"
+                            + " Email: contact@Iron_gate.com\n"
+                            + " Phone: 9200385\n"
+                            + "------------------------------------------");
                     break;
 
                 case 3:
-                    System.out.println("\nWrite your Suggestions:");
+                    System.out.println("\n--------- Write your Suggestions ---------");
                     in.nextLine();
-                    suggestions = in.nextLine();
-                    System.out.println("Thank you!");
+                    suggestions += in.nextLine() + "\n";
+                    System.out.println("\nThank you!\n"
+                            + "------------------------------------------\n");
                     break;
 
                 case 4:
@@ -372,10 +411,12 @@ public class Main {
                     in.nextLine();
                     password = in.nextLine();
                     index = sign(username, password);
+                    System.out.println("\nLogged in successfully\n"
+                                + "Welcome again, " + users.get(index).nickName
+                                + "\n------------------------------------------");
                     break;
 
                 case 5:
-                    System.out.println("Fill in all the fields");
                     sign();
 
                     break;
@@ -385,7 +426,7 @@ public class Main {
                     return;
 
                 default:
-                    System.out.println("Invalid choice");
+                    System.out.println("xx  Invalid choice  xx");
             } //end of switch
         } //end of while
         
@@ -403,7 +444,7 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.println("Search by:\n1. level\n2. Programming language\n3. Course");
+                    System.out.println("\nSearch by:\n1. level\n2. Programming language\n3. Course");
                     byte searchProject = in.nextByte();
 
                     while(searchProject > 3 || searchProject < 1){
@@ -411,12 +452,12 @@ public class Main {
                         searchProject = in.nextByte();
                     }
                     if(searchProject == 1){ //level
-                        System.out.println("Choose the level:\n1. Simple\n2. Intermediate\n3. Advanced");
+                        System.out.println("\nChoose the level:\n1. Simple\n2. Intermediate\n3. Advanced");
                         byte level = in.nextByte();
                         search(level);
                     }
                     else if(searchProject == 2){ //language
-                        System.out.println("Enter the language:\t");
+                        System.out.println("\nEnter the language:\t");
                         String language = in.next();
                         while( !searchLanguage(language) ){
                             System.out.println("This language is not available, enter again:\t");
@@ -425,7 +466,7 @@ public class Main {
                         search(language);
                     }
                     else{ //course
-                        System.out.println("Enter the course name: ");
+                        System.out.println("\nEnter the course name: ");
                         in.nextLine();
                         String courseName = in.nextLine();
                         int courseIndex = searchCourse(courseName);
@@ -444,15 +485,16 @@ public class Main {
                     break;
 
                 case 0:
-                     System.out.println("Logged out\n");
+                     System.out.println("Logged out, bye bye " + users.get(index).nickName + "\n");
                      home();
                      return;
 
                 case -1:
+                    System.out.println("Thank you for visiting Iron Gate :)");
                     return;
 
                 default:
-                    System.out.println("Invalid choice");
+                    System.out.println("xx  Invalid choice  xx");
             }
         }
         while(choice != -1);
