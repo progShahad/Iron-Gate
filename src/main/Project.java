@@ -1,49 +1,44 @@
 package main;
 import java.util.Scanner;
+import java.util.Date;
 
 public class Project extends Info {
     //Data fields
-    public String title, description, comments, uploadMethod, prog_language;
-    Team team;
+    public String title, description, comments, uploadMethod, prog_language, contactInfo;
+    public Team team;
     public int likes, dislikes;
     public byte level;
-    Course course;
+    public Course course;
+    public Date create;
+    
     Scanner in = new Scanner(System.in);
     
     //Constructors
-//    Project(){
-//        likes = 0;
-//        dislikes = 0;
-//    }
-//    Project(String username, String nickName, String email, String major, String password){
-//        super(username, nickName, email, major, password);
-//    }
-    Project(String title, String description, String uploadMethod, String project_language, byte level, Team team, Course course){
-        this(title, description, uploadMethod, project_language, level, course);
+    
+    //team project
+    Project(String title, String description, String uploadMethod, String prog_language, byte level, Team team, Course course, String contactInfo){
+        this(title, description, uploadMethod, prog_language, level, course, contactInfo);
         this.team = team;
     }
-    
-    Project(String title, String description, String uploadMethod, String project_language, byte level, Course course){
+    //individual project
+    Project(String title, String description, String uploadMethod, String prog_language, byte level, Course course, String contactInfo){
         this.title = title;
         this.description = description;
         this.uploadMethod = uploadMethod;
-        this.prog_language = project_language;
+        this.prog_language = prog_language;
         this.level = level;
         this.course = course;
+        this.contactInfo = contactInfo;
         likes = 0;
         dislikes = 0;
         comments = "";
+        create = new Date();
     }
     
     //Other methods
-//    @Override
-//    void addTeam(String teamName, int number, ArrayList<String> members){
-//        team = new Team(teamName, number, members);
-//    }
-    
     @Override
-    public void viewInfo(){
-        System.out.println("\n----------- Project Information -----------"
+    public void viewInfo(){ //this method displays the project information
+        System.out.println("\n----------- Project Information -----------\n"
                 + "\nTitle: " + title
                 + "\nDescription: " + description
                 + "\nProgramming language: " + prog_language
@@ -51,9 +46,12 @@ public class Project extends Info {
                 + "\nCourse name: " + course.name
                 + "\nCourse level: " + course.level
                 + "\nLikes: " + likes
-                + "\nDislikes: " + dislikes);
+                + "\nDislikes: " + dislikes
+                + "\nDate of upload: " + create);
         if(team != null)
                 System.out.println("Team name: " + team.teamName + " " + team.membersNames);
+        
+        System.out.println("Contact information: " + contactInfo);
         
         System.out.print("\nEnter 1 to view the comments of projects: ");
         if(in.nextInt() == 1){
@@ -62,20 +60,22 @@ public class Project extends Info {
             else
                 System.out.println(comments);
         }
-    }
+    } //end of viewInfo method
     
-    public void editInformation(){
+    @Override
+    public void editInformation(){ //edit the project information
         Scanner in = new Scanner(System.in);
-        System.out.println("Choose what to edit:\n"
+        System.out.println("\nChoose what to edit:\n"
                 + "1. Title\n"
-                + "2. Description\\n"
+                + "2. Description\n"
                 + "3. Level\n"
-                + "4. All");
+                + "4. Contact Information\n"
+                + "5. All");
         byte edit = in.nextByte();
         
         switch(edit){
             case 1:
-                System.out.println("New title: ");
+                System.out.print("New title: ");
                 in.nextLine();
                 title = in.nextLine();
                 break;
@@ -85,22 +85,28 @@ public class Project extends Info {
                 description = in.nextLine();
                 break;
             case 3:
-                System.out.println("New level: ");
+                System.out.print("New level: ");
                 level = in.nextByte();
                 break;
             case 4:
-                System.out.println("New title: ");
+                System.out.println("New contact information:");
+                in.nextLine();
+                contactInfo = in.nextLine();
+                break;
+            case 5:
+                System.out.print("New title: ");
                 in.nextLine();
                 title = in.nextLine();
                 System.out.println("New description: ");
                 description = in.nextLine();
-                System.out.println("New level: ");
+                System.out.print("New level: ");
                 level = in.nextByte();
+                System.out.println("New contact information:");
+                in.nextLine();
+                contactInfo = in.nextLine();
                 break;
         }
-        
-        
-    }
-    
+        System.out.println("\n ---------------- Updated ----------------");
+    } //end of editInformation method
     
 } //end of Project class
