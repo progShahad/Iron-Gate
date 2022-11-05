@@ -10,7 +10,5 @@ public class Course{
         this.name = name;
         this.level = level;
     }
-    //Other methods
-    
     
 } //end of Course class
