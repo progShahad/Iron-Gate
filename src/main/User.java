@@ -1,31 +1,25 @@
 package main;
-import java.util.*;
-//import static main.Main.in;
-//import static main.Main.users;
+import java.util.Scanner;
+import java.util.ArrayList;
 
 public class User extends Info{
     //Data fields
     public String username, nickName, major;
     private String password, email;
-    public Date create;
-//    public Project[] projects;
+    public ArrayList<Project> projects;
     
     Scanner in = new Scanner(System.in);
-//    public static int numUser = 0;
     
     //Constructor
-//    User(){
-//        
-//    }
     User(String username, String nickName, String email, String major, String password){
         this.username = username;
         this.nickName = nickName;
         this.email = email;
         this.major = major;
         this.password = password;
-        create = new Date();
-//        numUser++;
+        projects = new ArrayList<>();
     }
+    
     //Accessors & Mutators
     public void setPassword(String password){
         this.password = password;
@@ -42,7 +36,28 @@ public class User extends Info{
     }
     
     //Other methods
-    public void editInformation(){
+    @Override
+    public void viewInfo(){ //display the user information
+        byte change;
+        do{
+            System.out.println("\n ------- " + this.nickName + "\'s Information -------");
+            System.out.println("  Username: " + this.username);
+            System.out.println("  Email: " + this.email);
+            System.out.println("  Major: " + this.major);
+            System.out.println("\nChange Information? 1. Yes  2. No");
+            change = in.nextByte();
+
+            if(change == 1){
+                editInformation();
+            }
+        }
+        while(change == 1);
+        
+        System.out.println("------------------------------------------");
+    } //end of viewInfo method
+    
+    @Override
+    public void editInformation(){ //edit the user information
         System.out.println("Choose what to edit:\n"
                 + "1. Username\n"
                 + "2. Nickname\n"
@@ -72,10 +87,6 @@ public class User extends Info{
                 System.out.print("New email: ");
                 setEmail(in.next());
                 email = Main.validEmail(email);
-//                while( !email.contains("@") ){
-//                    System.out.print("Email must contain '@', enter again: ");
-//                    email = in.next();
-//                }
                 break;
             case 5:
                 System.out.print("New password: ");
@@ -90,17 +101,17 @@ public class User extends Info{
                 System.out.print("New username: ");
                 in.nextLine();
                 username = in.nextLine();
+                
                 System.out.print("New nickname: ");
                 nickName = in.nextLine();
+                
                 System.out.print("New major: ");
                 major = in.nextLine();
+                
                 System.out.print("New email: ");
                 setEmail(in.next());
                 email = Main.validEmail(email);
-//                while( !email.contains("@") ){
-//                    System.out.print("Email must contain '@', enter again: ");
-//                    email = in.next();
-//                }
+                
                 System.out.print("New password: ");
                 in.nextLine();
                 setPassword(in.nextLine());
@@ -112,29 +123,7 @@ public class User extends Info{
                 
                 break;
         }
-    }
-    
-    public void viewInfo(){
-        byte change;
-        String username, nickName, major, email;
-        do{
-            System.out.println("\n ------- " + this.nickName + "\'s Information -------");
-            System.out.println("  Username: " + this.username);
-            System.out.println("  Email: " + this.email);
-            System.out.println("  Major: " + this.major);
-            System.out.println("\nChange Information? 1. Yes  2. No");
-            change = in.nextByte();
-
-            if(change == 1){
-                editInformation();
-//                viewInfo();
-            }
-        }
-        while(change == 1);
-        
-        System.out.println("------------------------------------------");
-    } //end of viewInfo method
-    
-//    abstract void addTeam(String teamName, int number, ArrayList<String> members);
+        System.out.println("\n ---------------- Updated ----------------");
+    } //end of editInformation method
     
 } //end of User class
