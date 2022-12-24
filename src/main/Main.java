@@ -29,10 +29,6 @@ public class Main {
     static ArrayList<Team> teams = new ArrayList<>();
     
     public static void main(String[] args) {
-        home();
-    } //end of main
-    
-    public static void home(){
         users.add( new User("shahad", "Shahad", "shahad@gmail.com", "CS", "Sshh1112") );
         users.add( new User("norah", "Norah", "norah@gmail.com", "CS", "Nn111234") );
         
@@ -55,6 +51,10 @@ public class Main {
         users.get(1).projects.add(projects.get(0)); //add Iron Gate to the user (Norah)
         users.get(0).projects.add(projects.get(1)); //add Delivery Service to the user (Shahad)
         
+        home();
+    } //end of main
+    
+    public static void home(){
         byte platform, choice;
         int index = -1;
         String suggestions = "", username, password;
@@ -508,7 +508,7 @@ public class Main {
         System.out.println(results + " results.\n");
         if(results > 0)
             expand();
-    } //end of search method
+    }           //end of search method
     
     public static void search(String language){ //search for projects by programming language
         int results = 0;
@@ -529,7 +529,7 @@ public class Main {
         System.out.println(results + " results.\n");
         if(results > 0)
             expand();
-    } //end of search method
+    }       //end of search method
     
     public static void search(Course course){ //search for projects by course
         int results = 0;
@@ -546,7 +546,7 @@ public class Main {
         System.out.println(results + " results.\n");
         if(results > 0)
             expand();
-    } //end of search method
+    }          //end of search method
     
     public static void expand(){ //this method displays the selected project information
         System.out.println("Enter the number of project to be expanded, 0 to exit:");
